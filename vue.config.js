@@ -2,7 +2,6 @@ const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 const { defineConfig } = require('@vue/cli-service')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
@@ -37,9 +36,4 @@ module.exports = defineConfig({
       }
     }
   }
-  // chainWebpack: (config) => {
-  //   config.plugin('html').tap((args) => {
-  //     console.log(args)
-  //   })
-  // }
 })
