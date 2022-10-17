@@ -1,16 +1,21 @@
 import ByRequest from './request'
-
+import cache from '@/utils/cache'
 const service = new ByRequest({
   baseURL: '/api',
   timeout: 10000,
-  headers: {
-    authorization:
-      'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJOYW1lIjoi5YiY6YeR5Lqu55qE5a6d6JuLIiwiaWF0IjoxNjYwMzg0MTAzLCJleHAiOjE2NjA0NzA1MDN9.HOl737_It7ehz_ORFeL8-e0iaHIYUU5uzXxU5-W1NbJFAk5x7gikiY8h5irZsWAuJ0he8AOS52jGpMqOEgqAuRPqBJ35C0Z8Dyev4U7nIcBukq6KrRFJ9EInvMA0JrYZP7F8cbi_hMJIlXY2t7ND5foCbe4lFcFOpGIEVpTa4Qo'
-  },
   interceptors: {
     requestInterceptorFulfilled(config) {
-      console.log('实例自身请求拦截器--成功')
-
+      // console.log('实例自身请求拦截器--成功')
+      /*
+        在本地缓存中获取token
+        不在vuex中获取,因为vuex刷新状态丢失,当然也可以在刷新时将缓存中数据赋给vuex,但是多了一步,较为繁琐
+      */
+      const token = cache.getCache('token', 1)
+      if (token) {
+        config.headers = {
+          authorization: `Bearer ${token}`
+        }
+      }
       return config
     },
     requestInterceptorReject(error) {

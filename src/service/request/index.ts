@@ -75,7 +75,7 @@ class ByRequest {
       }
     )
   }
-  request<T>(config: ByRequestConfig<T>): Promise<T> {
+  request<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     // 单个请求拦截器处理
     return new Promise<T>((resolve, reject) => {
       if (config.interceptors?.requestInterceptorFulfilled) {
@@ -96,19 +96,19 @@ class ByRequest {
         })
     })
   }
-  post<T>(config: ByRequestConfig<T>): Promise<T> {
+  post<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-  get<T>(config: ByRequestConfig<T>): Promise<T> {
+  get<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
-  delete<T>(config: ByRequestConfig<T>): Promise<T> {
+  delete<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  put<T>(config: ByRequestConfig<T>): Promise<T> {
+  put<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PUT' })
   }
-  patch<T>(config: ByRequestConfig<T>): Promise<T> {
+  patch<T = AxiosResponse>(config: ByRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
