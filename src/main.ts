@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import Router from '@/router'
 import pluginsRegister from '@/global'
-import store from '@/store/index'
+import store, { getLocalCacheData } from '@/store/index'
 // import service from '@/service'
 import 'normalize.css'
 import '@/assets/css/index.less'
@@ -22,7 +22,8 @@ import '@/assets/css/index.less'
 //   })
 
 const app = createApp(App)
-app.use(Router)
 app.use(pluginsRegister)
 app.use(store)
+getLocalCacheData()
+app.use(Router)
 app.mount('#app')

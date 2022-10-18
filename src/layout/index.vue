@@ -6,7 +6,7 @@
       </el-aside>
       <el-container>
         <el-header>
-          <nva-header @handleFoldChange="handleCollapse">哈哈哈哈</nva-header>
+          <nva-header @handleFoldChange="handleCollapse"></nva-header>
         </el-header>
         <el-main>
           <div class="layout-main">
@@ -23,6 +23,7 @@ import { defineComponent, ref } from 'vue'
 import NavMenu from './components/nav-menu/index'
 import NvaHeader from './components/nav-header/index'
 export default defineComponent({
+  name: 'homeMain',
   components: {
     NavMenu,
     NvaHeader
@@ -47,7 +48,7 @@ export default defineComponent({
     height: 100%;
     .layout-aside {
       height: 100%;
-      transition: width 0.5s ease;
+      transition: width 0.3s ease;
     }
     .el-header {
       background-color: #ffffff;

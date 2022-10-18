@@ -12,4 +12,8 @@ const store = createStore({
   }
 })
 
+// 派发-->获取缓存中的持久化数据
+export function getLocalCacheData() {
+  store.dispatch('loginMoudle/localCacheData')
+}
 export default store
