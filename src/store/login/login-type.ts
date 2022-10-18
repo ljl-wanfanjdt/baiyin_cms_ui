@@ -3,3 +3,5 @@ export interface loginStateType {
   userInfo: any
   userMenus: Array<any>
 }
+
+

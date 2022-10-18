@@ -2,12 +2,10 @@
   <div class="nav-menu">
     <h3 class="nav-title">白银物流管理系统</h3>
     <el-menu
-      default-active="5"
-      @open="handleOpen"
+      :default-active="activeId"
       background-color="#597bc9"
       text-color="#ffffff"
       active-text-color="#ffd04b"
-      @close="handleClose"
       :collapse="isCollapse"
     >
       <template v-for="item in userMenu" :key="item.id">
@@ -21,7 +19,10 @@
             </template>
             <!-- 继续遍历 -->
             <template v-for="innerItem in item.children" :key="innerItem.id">
-              <el-menu-item :index="innerItem.id + ''">
+              <el-menu-item
+                :index="innerItem.id + ''"
+                @click="clickMenuItem(innerItem)"
+              >
                 <template #title>
                   <span>{{ innerItem.menuName }}</span>
                 </template>
@@ -31,7 +32,7 @@
         </template>
         <!-- type2不能展开的一级菜单-->
         <template v-else-if="item.type == 2">
-          <el-menu-item :index="item.id + ''">
+          <el-menu-item :index="item.id + ''" @click="clickMenuItem(item)">
             <el-icon><HomeFilled /></el-icon>
             <!-- 不能展开的一级菜单标题 -->
             <template #title>
@@ -45,8 +46,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
+import { userMenuType } from '@/service/login/type'
 export default defineComponent({
   props: {
     isCollapse: {
@@ -57,11 +60,43 @@ export default defineComponent({
   components: {},
   setup() {
     const store = useStore()
-    const userMenu = computed(() => store.state.loginMoudle.userMenus)
-    console.log(userMenu.value)
+    const router = useRouter()
+    const route = useRoute()
+    const userMenu: userMenuType[] = store.state.loginMoudle.userMenus
 
+    // 点击切换菜单
+    const clickMenuItem = (menuItem: userMenuType) => {
+      activeId.value = menuItem.id + ''
+      const path = menuItem.path ?? '/not-found'
+      router.push(path)
+    }
+
+    // 页面刷新/重置后激活菜单id获取
+    const pathToMenu = <T extends userMenuType>(
+      menus: T[],
+      currentPath: string
+    ): userMenuType | any => {
+      for (let index = 0, l = menus.length; index < l; index++) {
+        if (menus[index].type === '1') {
+          const menu = menus[index]?.children
+          if (menu) {
+            const findMenu = pathToMenu(menu, currentPath)
+            return findMenu
+          }
+        } else if (
+          menus[index].type === '2' &&
+          menus[index].path === currentPath
+        ) {
+          return menus[index]
+        }
+      }
+    }
+    const menu = pathToMenu(userMenu, route.path)
+    const activeId = ref<string>(menu?.id + '')
     return {
-      userMenu
+      userMenu,
+      clickMenuItem,
+      activeId
     }
   }
 })
@@ -73,6 +108,9 @@ export default defineComponent({
   text-align: center;
   .nav-title {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     line-height: 70px;
     background-color: #2b5ac5;
     font-size: 18px;

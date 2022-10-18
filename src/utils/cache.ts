@@ -1,66 +1,34 @@
 enum storageType {
-  SESSION_STORAGE,
-  LOCAL_STORAGE
+  SESSION_STORAG = 'sessionStorage',
+  LOCAL_STORAGE = 'localStorage'
 }
 /**
  * @description 将数据缓存到本地-->类封装
  */
 class StorageCache {
+  readonly story: string
+  constructor(type: storageType) {
+    this.story = type
+  }
   /**
    * @description 存储数据
    * @param key 要存的key
    * @param value 要存的值
    * @param type 存储类型(0-sessionStorage,1-localStorage)
    */
-  setCache(key: string, value: any, type: storageType) {
-    switch (type) {
-      case storageType.LOCAL_STORAGE:
-        window.localStorage.setItem(key, JSON.stringify(value))
-        break
-      case storageType.SESSION_STORAGE:
-        window.sessionStorage.setItem(key, JSON.stringify(value))
-        break
-      default:
-        break
-    }
+  setCache(key: string, value: any) {
+    window[this.story as storageType].setItem(key, JSON.stringify(value))
   }
-  getCache(key: string, type: storageType) {
+  getCache(key: string) {
     let value: any
-    switch (type) {
-      case storageType.LOCAL_STORAGE:
-        value = window.localStorage.getItem(key)
-        return value && JSON.parse(value)
-      case storageType.SESSION_STORAGE:
-        value = window.sessionStorage.getItem(key)
-        return value && JSON.parse(value)
-      default:
-        break
-    }
+    value = window[this.story as storageType].getItem(key)
+    return value && JSON.parse(value)
   }
-  removeCache(key: string, type: storageType) {
-    switch (type) {
-      case storageType.LOCAL_STORAGE:
-        window.localStorage.removeItem(key)
-        break
-      case storageType.SESSION_STORAGE:
-        window.sessionStorage.removeItem(key)
-        break
-      default:
-        break
-    }
+  removeCache(key: string) {
+    window[this.story as storageType].removeItem(key)
   }
-  clearCache(type: storageType) {
-    switch (type) {
-      case storageType.LOCAL_STORAGE:
-        window.localStorage.clear()
-        break
-      case storageType.SESSION_STORAGE:
-        window.sessionStorage.clear()
-        break
-      default:
-        // const foo: never = type
-        break
-    }
+  clearCache() {
+    window[this.story as storageType].clear()
   }
 }
-export default new StorageCache()
+export default new StorageCache(storageType.LOCAL_STORAGE)

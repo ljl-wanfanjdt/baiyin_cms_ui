@@ -10,7 +10,7 @@ const service = new ByRequest({
         在本地缓存中获取token
         不在vuex中获取,因为vuex刷新状态丢失,当然也可以在刷新时将缓存中数据赋给vuex,但是多了一步,较为繁琐
       */
-      const token = cache.getCache('token', 1)
+      const token = cache.getCache('token')
       if (token) {
         config.headers = {
           authorization: `Bearer ${token}`

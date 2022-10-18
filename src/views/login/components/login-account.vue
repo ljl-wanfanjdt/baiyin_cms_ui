@@ -42,8 +42,8 @@ export default defineComponent({
   components: {},
   setup() {
     const userInfo = reactive({
-      userName: cache.getCache('userName', 1) ?? '',
-      password: cache.getCache('password', 1) ?? ''
+      userName: cache.getCache('userName') ?? '',
+      password: cache.getCache('password') ?? ''
     })
     const store = useStore()
     const formRef = ref<InstanceType<typeof ElForm>>()
@@ -55,8 +55,8 @@ export default defineComponent({
         }
         if (isCachePassword) {
           // 将账号密码存入本地缓存中
-          cache.setCache('userName', userInfo.userName, 1)
-          cache.setCache('password', userInfo.password, 1)
+          cache.setCache('userName', userInfo.userName)
+          cache.setCache('password', userInfo.password)
         }
         store.dispatch('loginMoudle/loginActionHandle', {
           userName: userInfo.userName,

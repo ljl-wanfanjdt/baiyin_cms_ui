@@ -1,5 +1,5 @@
 import service from '../index'
-import { loginData, apiLoginType, UserInfo, MenuInfo } from './type'
+import { loginData, apiLoginType, UserInfo, userMenuType } from './type'
 import { apiDataType } from '../type'
 const loginApi = {
   loginRequest(data: loginData) {
@@ -15,7 +15,7 @@ const loginApi = {
     })
   },
   getUserMenuList(id: number) {
-    return service.get<apiDataType<Array<MenuInfo>>>({
+    return service.get<apiDataType<Array<userMenuType>>>({
       url: `/role/menu/${id}/list`
     })
   }

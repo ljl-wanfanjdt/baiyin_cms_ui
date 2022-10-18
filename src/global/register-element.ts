@@ -8,10 +8,21 @@ import {
   HomeFilled,
   Fold,
   Expand,
-  Setting
+  Setting,
+  ArrowDown,
+  CircleClose
 } from '@element-plus/icons-vue'
 
-const elementComponents = [UserFilled, Lock, HomeFilled, Fold, Expand, Setting]
+const elementComponents = [
+  UserFilled,
+  Lock,
+  HomeFilled,
+  Fold,
+  Expand,
+  Setting,
+  ArrowDown,
+  CircleClose
+]
 
 export default function (app: App) {
   elementComponents.forEach((itemEl) => {

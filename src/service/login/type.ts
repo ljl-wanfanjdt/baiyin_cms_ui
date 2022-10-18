@@ -13,18 +13,14 @@ export interface UserInfo {
   userName: string
 }
 
-interface MenuPublic {
-  id: number
+export interface userMenuType {
   icon: string
-  path: string
-  type: number
+  id: number
   menuName: string
-}
-interface MenuChildren extends MenuPublic {
-  parentId: number
-}
-export interface MenuInfo extends MenuPublic {
-  children: Array<MenuChildren>
+  parentId?: number
+  path: string
+  type: string
+  children?: userMenuType[]
 }
 export interface apiLoginType {
   id: number
