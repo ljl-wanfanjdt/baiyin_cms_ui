@@ -10,7 +10,7 @@ module.exports = defineConfig({
   configureWebpack: {
     resolve: {
       alias: {
-        views: '@/views'
+        views: '@/views',
       }
     },
     plugins: [

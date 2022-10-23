@@ -2,11 +2,12 @@
   <div class="nav-menu">
     <h3 class="nav-title">白银物流管理系统</h3>
     <el-menu
-      :default-active="activeId"
+      :default-active="route.path"
       background-color="#597bc9"
       text-color="#ffffff"
       active-text-color="#ffd04b"
       :collapse="isCollapse"
+      :router="true"
     >
       <template v-for="item in userMenu" :key="item.id">
         <!-- type1能继续展开的一级菜单,继续遍历 -->
@@ -20,7 +21,7 @@
             <!-- 继续遍历 -->
             <template v-for="innerItem in item.children" :key="innerItem.id">
               <el-menu-item
-                :index="innerItem.id + ''"
+                :index="innerItem.path"
                 @click="clickMenuItem(innerItem)"
               >
                 <template #title>
@@ -32,10 +33,12 @@
         </template>
         <!-- type2不能展开的一级菜单-->
         <template v-else-if="item.type == 2">
-          <el-menu-item :index="item.id + ''" @click="clickMenuItem(item)">
-            <el-icon><HomeFilled /></el-icon>
+          <el-menu-item :index="item.path" @click="clickMenuItem(item)">
             <!-- 不能展开的一级菜单标题 -->
             <template #title>
+              <el-icon>
+                <component :is="item.icon"></component>
+              </el-icon>
               <span>{{ item.menuName }}</span>
             </template>
           </el-menu-item>
@@ -66,37 +69,38 @@ export default defineComponent({
 
     // 点击切换菜单
     const clickMenuItem = (menuItem: userMenuType) => {
-      activeId.value = menuItem.id + ''
+      // activeId.value = menuItem.id + ''
       const path = menuItem.path ?? '/not-found'
       router.push(path)
     }
 
     // 页面刷新/重置后激活菜单id获取
-    const pathToMenu = <T extends userMenuType>(
-      menus: T[],
-      currentPath: string
-    ): userMenuType | any => {
-      for (let index = 0, l = menus.length; index < l; index++) {
-        if (menus[index].type === '1') {
-          const menu = menus[index]?.children
-          if (menu) {
-            const findMenu = pathToMenu(menu, currentPath)
-            return findMenu
-          }
-        } else if (
-          menus[index].type === '2' &&
-          menus[index].path === currentPath
-        ) {
-          return menus[index]
-        }
-      }
-    }
-    const menu = pathToMenu(userMenu, route.path)
-    const activeId = ref<string>(menu?.id + '')
+    // const pathToMenu = <T extends userMenuType>(
+    //   menus: T[],
+    //   currentPath: string
+    // ): userMenuType | any => {
+    //   for (let index = 0, l = menus.length; index < l; index++) {
+    //     if (menus[index].type === '1') {
+    //       const menu = menus[index]?.children
+    //       if (menu) {
+    //         const findMenu = pathToMenu(menu, currentPath)
+    //         return findMenu
+    //       }
+    //     } else if (
+    //       menus[index].type === '2' &&
+    //       menus[index].path === currentPath
+    //     ) {
+    //       return menus[index]
+    //     }
+    //   }
+    // }
+    // const menu = pathToMenu(userMenu, route.path)
+    // const activeId = ref<string>(menu?.id + '')
     return {
       userMenu,
       clickMenuItem,
-      activeId
+      // activeId,
+      route
     }
   }
 })
