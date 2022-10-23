@@ -6,6 +6,7 @@ import store, { getLocalCacheData } from '@/store/index'
 // import service from '@/service'
 import 'normalize.css'
 import '@/assets/css/index.less'
+import 'element-plus/es/components/message/style/css'
 // interface responseDataType {
 //   code: number
 //   message: string

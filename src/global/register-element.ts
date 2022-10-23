@@ -2,6 +2,7 @@
  * @description 按需导入elementui组件
  */
 import type { App } from 'vue'
+import 'element-plus/dist/index.css'
 import {
   UserFilled,
   Lock,
@@ -10,9 +11,10 @@ import {
   Expand,
   Setting,
   ArrowDown,
-  CircleClose
+  CircleClose,
+  Grid
 } from '@element-plus/icons-vue'
-
+import { ElInput } from 'element-plus'
 const elementComponents = [
   UserFilled,
   Lock,
@@ -21,7 +23,9 @@ const elementComponents = [
   Expand,
   Setting,
   ArrowDown,
-  CircleClose
+  CircleClose,
+  Grid,
+  ElInput
 ]
 
 export default function (app: App) {

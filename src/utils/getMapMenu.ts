@@ -7,6 +7,8 @@ export function refigterRoutes(userMenu: userMenuType[]) {
   const localRoutes: RouteRecordRaw[] = []
   const routeFiles = require.context('../router/main', true, /\.ts/)
   routeFiles.keys().forEach((path) => {
+    console.log(path)
+
     const route = require(`../router/main${path.split('.')[1]}`)
     localRoutes.push(route.default)
   })
@@ -18,7 +20,7 @@ export function refigterRoutes(userMenu: userMenuType[]) {
         const route = localRoutes.find(
           (route: RouteRecordRaw) => route.path === menu.path
         )
-        if (!firstRoute) firstRoute = route
+        if (!firstRoute && route?.path === '/main/dashboard') firstRoute = route
         route && routes.push(route)
       } else {
         menu?.children && _recursGetRoute(menu.children)
