@@ -95,7 +95,7 @@ export default defineComponent({
     //   }
     // }
     // const menu = pathToMenu(userMenu, route.path)
-    const activeId = ref<string>(menu?.id + '')
+    // const activeId = ref<string>(menu?.id + '')
     return {
       userMenu,
       clickMenuItem,
